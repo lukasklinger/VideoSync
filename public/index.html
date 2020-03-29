@@ -3,9 +3,17 @@
   <head>
     <meta charset="utf-8">
     <title>VideoSync</title>
+
+    <script src="/js/playback.js" charset="utf-8"></script>
   </head>
-  
+
   <body>
-    <video src="video.mp4" autoplay controls></video>
+    <video src="video.mp4" controls id="player"></video>
+
+    <button type="button" name="button" onclick="syncPlay()">Sync</button>
   </body>
+
+  <script type="text/javascript">
+    init();
+  </script>
 </html>
