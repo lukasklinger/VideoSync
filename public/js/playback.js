@@ -7,7 +7,7 @@ function init() {
   player.onplay = function() {
     if(!initSync){
       initSync = true;
-      setTimeout(syncPlay, 1000);
+      setTimeout(syncPlay, 500);
     }
   };
 }
