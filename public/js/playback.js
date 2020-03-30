@@ -23,6 +23,6 @@ function syncPlay() {
     }
   };
 
-  xhttp.open("GET", "/sync", true);
+  xhttp.open("GET", "/api/sync", true);
   xhttp.send();
 }
