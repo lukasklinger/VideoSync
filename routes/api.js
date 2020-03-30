@@ -3,6 +3,7 @@ const router = express.Router();
 
 var tickInterval;
 var currTime = 0;
+var title = "";
 
 router.get('/sync', function(req, res) {
   res.send(currTime.toString(10));
@@ -24,6 +25,10 @@ router.get('/reset', function(req, res) {
 
   res.status = 200;
   res.end();
+})
+
+router.get('/title', function(req, res) {
+  res.send(title);
 })
 
 function tick() {

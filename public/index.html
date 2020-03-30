@@ -19,19 +19,27 @@
         <video src="video.mp4" preload controls id="player"></video>
       </div>
       <div class="column" id="sideColumn">
-        <div class="container" style="padding-bottom: 5px;">
-          <button class="button" name="button" onclick="syncPlay()">Sync</button>
+        <div class="container" style="padding-bottom: 7px;">
+          <h1 class="subtitle has-text-light"></h1>
+        </div>
+
+        <div class="container" id="options" style="padding-bottom: 5px;">
+          <p class="has-text-light has-text-centered">Options</p>
+
+          <div id="optionContainer">
+            <button class="button is-small" name="button" onclick="syncPlay()">Sync</button>
+          </div>
         </div>
 
         <div class="container" id="chatContainer">
-          <ul id="messages"></ul>
+          <ul id="messages" class="is-size-6"></ul>
         </div>
 
         <div class="container" id="messageInputContainer">
           <form action="/" method="POST" id="chatForm">
             <div class="field has-addons">
-                <input id="txt" autocomplete="off" placeholder="type your message here..." style="width: 100%;"/>
-                <button class="button">Send</button>
+                <input id="txt" class="input" type="text" data-lpignore="true" autocomplete="off" placeholder="type your message here..." style="width: 100%;"/>
+                <button class="button is-dark">Send</button>
             </div>
           </form>
         </div>
@@ -39,8 +47,8 @@
         <div class="container" id="usernameContainer">
           <form action="/" method="POST" id="usernameForm">
             <div class="field has-addons">
-                <input id="usernameTxt" autocomplete="off" placeholder="Enter Username" style="width: 100%;"/>
-                <button class="button">Enter</button>
+                <input id="usernameTxt" class="input" type="text" data-lpignore="true" autocomplete="off" placeholder="Enter Username" style="width: 100%;"/>
+                <button class="button is-dark">Enter</button>
             </div>
           </form>
         </div>

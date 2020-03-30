@@ -10,6 +10,9 @@ function initPlayback() {
       setTimeout(syncPlay, 500);
     }
   };
+
+  getTitle();
+  setInterval(getTitle, 10000);
 }
 
 function syncPlay() {
@@ -26,5 +29,24 @@ function syncPlay() {
   };
 
   xhttp.open("GET", "/api/sync", true);
+  xhttp.send();
+}
+
+function getTitle() {
+  var xhttp = new XMLHttpRequest();
+
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      if(this.responseText.length > 0) {
+        $('h1').text(this.responseText);
+        document.title = 'Playing ' + this.responseText;
+      } else {
+        $('h1').text("");
+        document.title = 'VideoSync';
+      }
+    }
+  };
+
+  xhttp.open("GET", "/api/title", true);
   xhttp.send();
 }
