@@ -20,3 +20,31 @@ body {
   height: 100%;
   width: 100%;
 }
+
+#sideColumn {
+  display: grid;
+  grid-template-rows: [row1-start] max-content [row1-end] auto [third-line] max-content [last-line];
+}
+
+#chatContainer {
+  border-style: solid;
+  border-width: 2px;
+  overflow-y: scroll;
+  width: 100%;
+}
+
+#messages {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  color: white;
+}
+
+#messages li {
+  padding: 5px 10px;
+  background: rgb(0, 0, 0);
+}
+
+#messages li:nth-child(odd) {
+  background: rgb(60, 60, 60);
+}

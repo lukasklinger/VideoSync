@@ -1,7 +1,7 @@
 var player;
 var initSync = false;
 
-function init() {
+function initPlayback() {
   player = document.getElementById("player");
 
   player.onplay = function() {

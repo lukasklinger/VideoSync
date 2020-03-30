@@ -3,6 +3,10 @@
 
 <head>
   <title>Simple Group Chat on Node.js</title>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/jquery.min.js"></script>
+  <script src="/js/chat.js" charset="utf-8"></script>
+
   <style>
     * {
       margin: 0;
@@ -55,8 +59,6 @@
       background: #eee;
     }
   </style>
-  <script src="../../socket.io/socket.io.js"></script>
-  <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 </head>
 
 <body>
@@ -64,27 +66,9 @@
   <form action="/" method="POST" id="chatForm">
     <input id="txt" autocomplete="off" autofocus="on" oninput="isTyping()" placeholder="type your message here..." /><button>Send</button>
   </form>
-  <script>
-    var socket = io.connect();
-    // submit text message without reload/refresh the page
-    $('form').submit(function(e) {
-      e.preventDefault(); // prevents page reloading
-      socket.emit('chat_message', $('#txt').val());
-      $('#txt').val('');
-      return false;
-    });
-    // append the chat text message
-    socket.on('chat_message', function(msg) {
-      $('#messages').append($('<li>').html(msg));
-    });
-    // append text if someone is online
-    socket.on('is_online', function(username) {
-      $('#messages').append($('<li>').html(username));
-    });
-    // ask username
-    var username = prompt('Please tell me your name');
-    socket.emit('username', username);
-  </script>
 </body>
 
+<script type="text/javascript">
+  init();
+</script>
 </html>

@@ -4,7 +4,10 @@
     <meta charset="utf-8">
     <title>VideoSync</title>
 
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/jquery.min.js"></script>
     <script src="/js/playback.js" charset="utf-8"></script>
+    <script src="/js/chat.js" charset="utf-8"></script>
 
     <link rel="stylesheet" href="/css/bulma.min.css">
     <link rel="stylesheet" href="/css/index.css">
@@ -13,15 +16,43 @@
   <body>
     <div class="columns is-marginless is-paddingless">
       <div class="column is-four-fifths">
-        <video src="video.mp4" controls id="player"></video>
+        <video src="video.mp4" preload controls id="player"></video>
       </div>
-      <div class="column">
-        <button class="button" name="button" onclick="syncPlay()">Sync</button>
+      <div class="column" id="sideColumn">
+
+        <div class="container" id="usernameContainer">
+          <form action="/" method="POST" id="usernameForm">
+            <div class="field has-addons">
+                <input id="usernameTxt" autocomplete="off" placeholder="Enter Username" />
+                <button class="button">Done</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="container">
+          <button class="button" name="button" onclick="syncPlay()">Sync</button>
+        </div>
+
+        <div class="container" id="chatContainer">
+          <ul id="messages"></ul>
+        </div>
+
+        <div class="container">
+          <form action="/" method="POST" id="chatForm">
+            <div class="field has-addons">
+                <input id="txt" autocomplete="off" oninput="isTyping()" placeholder="type your message here..." />
+                <button class="button">Send</button>
+            </div>
+          </form>
+        </div>
+
+
       </div>
     </div>
   </body>
 
   <script type="text/javascript">
-    init();
+    initPlayback();
+    initChat();
   </script>
 </html>
