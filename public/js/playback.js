@@ -16,37 +16,23 @@ function initPlayback() {
 }
 
 function syncPlay() {
-  var xhttp = new XMLHttpRequest();
-
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      if(parseInt(this.responseText) != 0){
-        initSync = true;
-        player.play();
-        player.currentTime = parseInt(this.responseText);
-      }
+  $.get( "/api/state", (data) => {
+    if(parseInt(data.time) != 0){
+      initSync = true;
+      player.play();
+      player.currentTime = parseInt(data.time);
     }
-  };
-
-  xhttp.open("GET", "/api/sync", true);
-  xhttp.send();
+  });
 }
 
 function getTitle() {
-  var xhttp = new XMLHttpRequest();
-
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      if(this.responseText.length > 0) {
-        $('h1').text(this.responseText);
-        document.title = 'Playing ' + this.responseText;
-      } else {
-        $('h1').text("");
-        document.title = 'VideoSync';
-      }
+  $.get( "/api/state", (data) => {
+    if(data.title.length > 0) {
+      $('h1').text(data.title);
+      document.title = 'Playing ' + data.title;
+    } else {
+      $('h1').text("");
+      document.title = 'VideoSync';
     }
-  };
-
-  xhttp.open("GET", "/api/title", true);
-  xhttp.send();
+  });
 }

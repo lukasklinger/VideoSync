@@ -1,27 +1,37 @@
-var xhttp = new XMLHttpRequest();
-
 function init() {
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      bulmaToast.toast({message: "Done"});
-    } else if (this.readyState == 4 && this.status != 200){
-      bulmaToast.toast({message: "Error", type: "is-danger"});
-    }
-  };
 }
 
 function startPlayback() {
-  xhttp.open("GET", "/api/start", true);
-  xhttp.send();
+  $.post('/api/state', {start: true}, data => {
+    if(data.playing == true){
+      bulmaToast.toast({message: "Done"});
+    } else {
+      bulmaToast.toast({message: "Error", type: "is-danger"});
+      console.log(data);
+    }
+  }, 'json');
 }
 
 function resetPlayback() {
-  xhttp.open("GET", "/api/reset", true);
-  xhttp.send();
+  $.post('/api/state', {reset: true}, data => {
+    if(data.playing == false){
+      bulmaToast.toast({message: "Done"});
+    } else {
+      bulmaToast.toast({message: "Error", type: "is-danger"});
+      console.log(data);
+    }
+  }, 'json');
 }
 
 function saveTitle() {
   var title = $("#titleInput").val();
 
-  $.post('/api/title', {title: title},);
+  $.post('/api/state', {title: title}, data => {
+    if(data.title == title){
+      bulmaToast.toast({message: "Done"});
+    } else {
+      bulmaToast.toast({message: "Error", type: "is-danger"});
+      console.log(data);
+    }
+  }, 'json');
 }
