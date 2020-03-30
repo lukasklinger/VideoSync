@@ -14,8 +14,7 @@ router.get('/start', function(req, res) {
     tickInterval = setInterval(tick, 1000);
   }
 
-  res.status = 200;
-  res.end();
+  res.sendStatus(200);
 })
 
 router.get('/reset', function(req, res) {
@@ -23,13 +22,22 @@ router.get('/reset', function(req, res) {
   tickInterval = undefined;
   currTime = 0;
 
-  res.status = 200;
-  res.end();
+  res.sendStatus(200);
 })
 
 router.get('/title', function(req, res) {
   res.send(title);
 })
+
+router.post('/title', (req, res) => {
+  if(req.body.title != undefined) {
+    title = req.body.title;
+  } else {
+    title = "";
+  }
+
+  res.sendStatus(200);
+});
 
 function tick() {
   currTime++;

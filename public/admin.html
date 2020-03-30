@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/css/bulma.min.css">
 
     <script src="/js/admin.js" charset="utf-8"></script>
+    <script src="/js/jquery.min.js" charset="utf-8"></script>
     <script src="/js/bulma-toast.min.js" charset="utf-8"></script>
   </head>
   <body>
@@ -28,6 +29,17 @@
       <div class="container">
         <button class="button" name="play" onclick="startPlayback()">Play</button>
         <button class="button" name="reset" onclick="resetPlayback()">Reset</button>
+
+        <br>
+
+        <div class="field has-addons">
+          <div class="control">
+            <input id="titleInput" class="input" type="text" placeholder="Set Title">
+          </div>
+          <div class="control">
+            <button class="button" name="save" onclick="saveTitle()">Save</button>
+          </div>
+        </div>
       </div>
     </section>
 

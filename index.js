@@ -2,9 +2,12 @@ const express = require('express');
 const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
+const bodyParser = require('body-parser');
 
 const api = require('./routes/api.js');
 const path = require('path');
+
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static('public'));
 app.use(express.static('video'));

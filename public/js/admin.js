@@ -19,3 +19,9 @@ function resetPlayback() {
   xhttp.open("GET", "/api/reset", true);
   xhttp.send();
 }
+
+function saveTitle() {
+  var title = $("#titleInput").val();
+
+  $.post('/api/title', {title: title},);
+}
