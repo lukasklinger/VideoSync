@@ -26,6 +26,16 @@ body {
   grid-template-rows: [row1-start] max-content [row1-end] auto [third-line] max-content [last-line];
 }
 
+#usernameContainer {
+  display: none;
+  width: 100%;
+}
+
+#messageInputContainer {
+  display: none;
+  width: 100%;
+}
+
 #chatContainer {
   border-style: solid;
   border-width: 2px;

@@ -19,18 +19,16 @@ app.get('/admin', function(req, res){
   res.sendFile(path.join(__dirname, './public', 'admin.html'));
 });
 
-app.get('/chat', function(req, res){
-  res.sendFile(path.join(__dirname, './public', 'chat.html'));
-});
-
 io.sockets.on('connection', function(socket) {
   socket.on('username', function(username) {
     socket.username = username;
-    io.emit('is_online', '🔵 <i>' + socket.username + ' joined the chat.</i>');
+    io.emit('is_online', '🔵 <i>' + socket.username + ' joined.</i>');
   });
 
   socket.on('disconnect', function(username) {
-    io.emit('is_online', '🔴 <i>' + socket.username + ' left the chat.</i>');
+    if(socket.username != undefined) {
+      io.emit('is_online', '🔴 <i>' + socket.username + ' left.</i>');
+    }
   })
 
   socket.on('chat_message', function(message) {

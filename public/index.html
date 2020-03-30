@@ -15,21 +15,11 @@
 
   <body>
     <div class="columns is-marginless is-paddingless">
-      <div class="column is-four-fifths">
+      <div class="column is-three-quarters">
         <video src="video.mp4" preload controls id="player"></video>
       </div>
       <div class="column" id="sideColumn">
-
-        <div class="container" id="usernameContainer">
-          <form action="/" method="POST" id="usernameForm">
-            <div class="field has-addons">
-                <input id="usernameTxt" autocomplete="off" placeholder="Enter Username" />
-                <button class="button">Done</button>
-            </div>
-          </form>
-        </div>
-
-        <div class="container">
+        <div class="container" style="padding-bottom: 5px;">
           <button class="button" name="button" onclick="syncPlay()">Sync</button>
         </div>
 
@@ -37,16 +27,23 @@
           <ul id="messages"></ul>
         </div>
 
-        <div class="container">
+        <div class="container" id="messageInputContainer">
           <form action="/" method="POST" id="chatForm">
             <div class="field has-addons">
-                <input id="txt" autocomplete="off" oninput="isTyping()" placeholder="type your message here..." />
+                <input id="txt" autocomplete="off" placeholder="type your message here..." style="width: 100%;"/>
                 <button class="button">Send</button>
             </div>
           </form>
         </div>
 
-
+        <div class="container" id="usernameContainer">
+          <form action="/" method="POST" id="usernameForm">
+            <div class="field has-addons">
+                <input id="usernameTxt" autocomplete="off" placeholder="Enter Username" style="width: 100%;"/>
+                <button class="button">Enter</button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </body>

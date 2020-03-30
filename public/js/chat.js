@@ -1,7 +1,7 @@
 var socket = io.connect();
 
 function initChat() {
-  $('#chatContainer').hide();
+  $('#usernameContainer').show()
 
   // submit text message without reload/refresh the page
   $('#chatForm').submit(function(e) {
@@ -16,13 +16,15 @@ function initChat() {
     e.preventDefault(); // prevents page reloading
     socket.emit('username', $('#usernameTxt').val());
     $('#usernameContainer').hide();
-    $('#chatContainer').show();
+    $('#messageInputContainer').show();
     return false;
   });
 
   // append the chat text message
   socket.on('chat_message', function(msg) {
     $('#messages').append($('<li>').html(msg));
+
+    $('#chatContainer').animate({scrollTop: $('#chatContainer').prop("scrollHeight")}, 400);
   });
 
   // append text if someone is online
