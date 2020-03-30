@@ -17,7 +17,8 @@ function syncPlay() {
 
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-      console.log(this.responseText);
+      initSync = true;
+      player.play();
       player.currentTime = parseInt(this.responseText);
     }
   };
