@@ -3,8 +3,37 @@
   <head>
     <meta charset="utf-8">
     <title>VideoSync - Admin Interface</title>
+
+    <link rel="stylesheet" href="/css/bulma.min.css">
+
+    <script src="/js/admin.js" charset="utf-8"></script>
+    <script src="/js/bulma-toast.min.js" charset="utf-8"></script>
   </head>
   <body>
+    <section class="hero is-primary">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title">
+            VideoSync - Admin Interface
+          </h1>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h1 class="title">Playback Control</h1>
+      </div>
+
+      <div class="container">
+        <button class="button" name="play" onclick="startPlayback()">Play</button>
+        <button class="button" name="reset" onclick="resetPlayback()">Reset</button>
+      </div>
+    </section>
 
   </body>
+
+  <script type="text/javascript">
+    init();
+  </script>
 </html>

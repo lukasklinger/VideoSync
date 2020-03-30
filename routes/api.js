@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
+var tickInterval;
 var currTime = 0;
 
 router.get('/sync', function(req, res) {
@@ -8,9 +9,21 @@ router.get('/sync', function(req, res) {
 });
 
 router.get('/start', function(req, res) {
-  res.send('Started.');
+  if(tickInterval == undefined) {
+    tickInterval = setInterval(tick, 1000);
+  }
 
-  setInterval(tick, 1000);
+  res.status = 200;
+  res.end();
+})
+
+router.get('/reset', function(req, res) {
+  clearInterval(tickInterval);
+  tickInterval = undefined;
+  currTime = 0;
+
+  res.status = 200;
+  res.end();
 })
 
 function tick() {

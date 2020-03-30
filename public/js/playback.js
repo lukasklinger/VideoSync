@@ -17,9 +17,11 @@ function syncPlay() {
 
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-      initSync = true;
-      player.play();
-      player.currentTime = parseInt(this.responseText);
+      if(parseInt(this.responseText) != 0){
+        initSync = true;
+        player.play();
+        player.currentTime = parseInt(this.responseText);
+      }
     }
   };
 
