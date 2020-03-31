@@ -12,6 +12,10 @@ router.get('/state', function(req, res) {
 });
 
 router.post('/state', (req, res) => {
+  if(!req.session.adminPin) {
+    return res.json({auth: false});
+  }
+
   if(req.body.start == 'true'){
     if(tickInterval == undefined) {
       tickInterval = setInterval(tick, 1000);

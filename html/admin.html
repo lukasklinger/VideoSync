@@ -25,15 +25,37 @@
 
     <section class="section">
       <div class="container">
+        <a href="/" class="button">Back</a>
+      </div>
+
+      <br>
+
+      <div class="container">
         <h1 class="title">Playback Control</h1>
       </div>
 
+      <br>
+
       <div class="container">
-        <button class="button" name="play" onclick="startPlayback()">Play</button>
-        <button class="button" name="reset" onclick="resetPlayback()">Reset</button>
+        <div class="field is-grouped">
+          <p class="control">
+            <button class="button" name="play" onclick="startPlayback()">Play</button>
+          </p>
+          <p class="control">
+            <button class="button" name="reset" onclick="resetPlayback()">Reset</button>
+          </p>
+        </div>
+      </div>
 
-        <br>
+      <br>
 
+      <div class="container">
+        <h1 class="title">Set Title</h1>
+      </div>
+
+      <br>
+
+      <div class="container">
         <div class="field has-addons">
           <div class="control">
             <input id="titleInput" class="input" type="text" placeholder="Set Title">

@@ -1,29 +1,74 @@
 const express = require('express');
+const session = require('express-session');
+const bodyParser = require('body-parser');
 const app = express();
 const server = require('http').createServer(app);
+const memoryStore = require('memorystore')(session)
 const io = require('socket.io')(server);
-const bodyParser = require('body-parser');
 
 const api = require('./routes/api.js');
 const path = require('path');
 
-app.use(bodyParser.urlencoded({ extended: true }));
+const openAccess = false;
+const watchPin = '3232';
+const adminPin = '4542';
 
-app.use(express.static('public'));
-app.use(express.static('video'));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(session({
+    cookie: { maxAge: 86400000 },
+    store: new memoryStore({
+      checkPeriod: 86400000 // prune expired entries every 24h
+    }),
+    secret: 'such secret. so secure. wow.',
+    resave: false,
+    saveUninitialized: false
+}));
+
+app.use(express.static('./html/public'));
+app.use(express.static('./video'));
 
 app.use('/api', api.router);
 
 app.get('/', function(req, res){
-  res.sendFile(path.join(__dirname, './public', 'index.html'));
+  if(req.session.watchPin != watchPin && !openAccess) {
+    return res.redirect('/pin');
+  }
+
+  res.sendFile(path.join(__dirname, './html', 'home.html'));
 });
 
 app.get('/video', function(req, res){
-  res.sendFile(path.join(__dirname, './public', 'video.html'));
+  if(req.session.watchPin != watchPin && !openAccess) {
+    return res.redirect('/pin');
+  }
+
+  res.sendFile(path.join(__dirname, './html', 'video.html'));
 });
 
 app.get('/admin', function(req, res){
-  res.sendFile(path.join(__dirname, './public', 'admin.html'));
+  if(req.session.adminPin != adminPin) {
+    return res.redirect('/pin');
+  }
+
+  res.sendFile(path.join(__dirname, './html', 'admin.html'));
+});
+
+app.get('/pin', function(req, res){
+  res.sendFile(path.join(__dirname, './html', 'pin.html'));
+});
+
+app.post('/pin', function(req, res){
+  let sess = req.session;
+
+  if(req.body.pin == watchPin) {
+    sess.watchPin = req.body.pin;
+    res.redirect('/');
+  } else if(req.body.pin == adminPin) {
+    sess.adminPin = req.body.pin;
+    res.redirect('/admin');
+  } else {
+    res.redirect('/pin');
+  }
 });
 
 io.sockets.on('connection', function(socket) {

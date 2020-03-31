@@ -1,0 +1,14 @@
+html {
+  background-color: black;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}
