@@ -9,9 +9,8 @@ const io = require('socket.io')(server);
 const api = require('./routes/api.js');
 const path = require('path');
 
-const openAccess = true;
-const watchPin = '3232';
-const adminPin = '4542';
+const watchPin = process.env.WATCH_PIN;
+const adminPin = process.env.ADMIN_PIN || '4542';
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({
@@ -30,7 +29,7 @@ app.use(express.static('./video'));
 app.use('/api', api.router);
 
 app.get('/', function(req, res){
-  if(req.session.watchPin != watchPin && !openAccess) {
+  if(watchPin != undefined && req.session.watchPin != watchPin) {
     return res.redirect('/pin');
   }
 
@@ -38,7 +37,7 @@ app.get('/', function(req, res){
 });
 
 app.get('/video', function(req, res){
-  if(req.session.watchPin != watchPin && !openAccess) {
+  if(watchPin != undefined && req.session.watchPin != watchPin) {
     return res.redirect('/pin');
   }
 
