@@ -11,8 +11,6 @@ body {
 
 #player {
   position: relative;
-  top: 50%;
-  transform: translateY(-50%);
   height: 100%;
   width: 100%;
 }

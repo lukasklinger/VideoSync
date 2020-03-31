@@ -31,4 +31,15 @@ function initChat() {
   socket.on('is_online', function(username) {
     $('#messages').append($('<li>').html(username));
   });
+
+  var picker = new EmojiButton({position: 'top-start', theme: 'dark', style: 'native'});
+  var button = document.querySelector('#emojiButton');
+
+  picker.on('emoji', emoji => {
+    document.querySelector('#txt').value += emoji;
+  });
+
+  button.addEventListener('click', function () {
+    picker.togglePicker(button);
+  });
 }

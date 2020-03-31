@@ -8,6 +8,7 @@
     <script src="/js/jquery.min.js"></script>
     <script src="/js/playback.js" charset="utf-8"></script>
     <script src="/js/chat.js" charset="utf-8"></script>
+    <script src="/js/emoji-button.min.js" charset="utf-8"></script>
 
     <link rel="stylesheet" href="/css/bulma.min.css">
     <link rel="stylesheet" href="/css/index.css">
@@ -42,8 +43,9 @@
         <div class="container" id="messageInputContainer">
           <form action="/" method="POST" id="chatForm">
             <div class="field has-addons">
-                <input id="txt" class="input" type="text" data-lpignore="true" autocomplete="off" placeholder="type your message here..." style="width: 100%;"/>
-                <button class="button is-dark">Send</button>
+              <p class="control"><button id="emojiButton" class="button" type="button" name="button">😀</button></p>
+              <p class="control"><input id="txt" class="input" type="text" data-lpignore="true" autocomplete="off" placeholder="type your message here..." style="width: 100%;"/></p>
+              <p class="control"><button class="button is-dark">Send</button></p>
             </div>
           </form>
         </div>

@@ -9,7 +9,7 @@ const io = require('socket.io')(server);
 const api = require('./routes/api.js');
 const path = require('path');
 
-const openAccess = false;
+const openAccess = true;
 const watchPin = '3232';
 const adminPin = '4542';
 
