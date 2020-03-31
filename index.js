@@ -18,6 +18,10 @@ app.get('/', function(req, res){
   res.sendFile(path.join(__dirname, './public', 'index.html'));
 });
 
+app.get('/video', function(req, res){
+  res.sendFile(path.join(__dirname, './public', 'video.html'));
+});
+
 app.get('/admin', function(req, res){
   res.sendFile(path.join(__dirname, './public', 'admin.html'));
 });

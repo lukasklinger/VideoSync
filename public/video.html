@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>VideoSync</title>
+
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/playback.js" charset="utf-8"></script>
+
+    <link rel="stylesheet" href="/css/bulma.min.css">
+    <link rel="stylesheet" href="/css/video.css">
+
+    <link rel="shortcut icon" href="/assets/icon.png">
+  </head>
+
+  <body>
+    <video src="video.mp4" preload controls id="player"></video>
+
+    <section class="section">
+      <h2 class="subtitle has-text-light">Options</h2>
+      <button class="button" name="button" onclick="syncPlay()" title="Synchronize Playback with Server">Re-Sync</button>
+      <a href="/" class="button">Enable Chat</a>
+    </section>
+  </body>
+
+  <script type="text/javascript">
+    initPlayback();
+  </script>
+</html>
