@@ -6,8 +6,9 @@
 
 This Node.js app allows you to set up a simple server to watch a video with your friends, in sync. I took a lot of inspiration from [zorchenhimer/MovieNight](https://github.com/zorchenhimer/MovieNight), the main difference being that my version streams a video file directly from the server. Playback can be started and stopped from an admin interface and the stream can be protected with a PIN (Please be aware that this will not protect the video file from downloading). You can also chat directly on the page itself.
 
-![image]()
-![image]()
+![image](https://git.lukasklinger.com/lukas/VideoSync/raw/branch/master/screenshots/interface.png)
+
+![image](https://git.lukasklinger.com/lukas/VideoSync/raw/branch/master/screenshots/admin.png)
 
 ## Installation
 
