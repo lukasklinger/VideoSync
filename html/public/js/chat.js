@@ -23,13 +23,13 @@ function initChat() {
   // append the chat text message
   socket.on('chat_message', function(msg) {
     $('#messages').append($('<li>').html(msg));
-
-    $('#chatContainer').animate({scrollTop: $('#chatContainer').prop("scrollHeight")}, 400);
+    scrollToMessage();
   });
 
-  // append text if someone is online
+  // append text if someone is online/offline
   socket.on('is_online', function(username) {
     $('#messages').append($('<li>').html(username));
+    scrollToMessage();
   });
 
   var picker = new EmojiButton({position: 'top-start', theme: 'dark', style: 'native'});
@@ -42,4 +42,8 @@ function initChat() {
   button.addEventListener('click', function () {
     picker.togglePicker(button);
   });
+}
+
+function scrollToMessage() {
+  $('#chatContainer').animate({scrollTop: $('#chatContainer').prop("scrollHeight")}, 400);
 }
