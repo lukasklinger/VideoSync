@@ -6,8 +6,13 @@ function initChat() {
   // submit text message without reload/refresh the page
   $('#chatForm').submit(function(e) {
     e.preventDefault(); // prevents page reloading
-    socket.emit('chat_message', $('#txt').val());
-    $('#txt').val('');
+
+    var message = $('#txt').val();
+    if(message.length > 0){
+      socket.emit('chat_message', $('#txt').val());
+      $('#txt').val('');
+    }
+
     return false;
   });
 
