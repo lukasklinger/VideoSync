@@ -27,14 +27,12 @@ function initChat() {
 
   // append the chat text message
   socket.on('chat_message', function(msg) {
-    $('#messages').append($('<li>').html(msg));
-    scrollToMessage();
+    showMessage(msg);
   });
 
   // append text if someone is online/offline
   socket.on('is_online', function(username) {
-    $('#messages').append($('<li>').html(username));
-    scrollToMessage();
+    showMessage(username);
   });
 
   var picker = new EmojiButton({position: 'top-start', theme: 'dark', style: 'native'});
@@ -51,4 +49,9 @@ function initChat() {
 
 function scrollToMessage() {
   $('#chatContainer').animate({scrollTop: $('#chatContainer').prop("scrollHeight")}, 400);
+}
+
+function showMessage(message) {
+  $('#messages').append($('<li>').html(message));
+  scrollToMessage();
 }
