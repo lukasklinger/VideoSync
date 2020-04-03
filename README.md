@@ -68,6 +68,11 @@ docker-compose down
 
 * 1.0.0
     * First release
+* 1.1.0
+    * sanatize user input
+    * added autosync
+    * discard empty chat messages
+    * sync more precise when starting playback
 
 ## Meta
 
