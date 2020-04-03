@@ -8,8 +8,8 @@ function initChat() {
     e.preventDefault(); // prevents page reloading
 
     var message = $('#txt').val();
-    if(message.length > 0){
-      socket.emit('chat_message', $('#txt').val());
+    if (message.length > 0) {
+      socket.emit('chat_message', sanatizeInput($('#txt').val()));
       $('#txt').val('');
     }
 
@@ -19,7 +19,7 @@ function initChat() {
   // submit username without reload/refresh the page
   $('#usernameForm').submit(function(e) {
     e.preventDefault(); // prevents page reloading
-    socket.emit('username', $('#usernameTxt').val());
+    socket.emit('username', sanatizeInput($('#usernameTxt').val()));
     $('#usernameContainer').hide();
     $('#messageInputContainer').show();
     return false;
@@ -35,23 +35,44 @@ function initChat() {
     showMessage(username);
   });
 
-  var picker = new EmojiButton({position: 'top-start', theme: 'dark', style: 'native'});
+  // retransmit username if reconnected
+  socket.on('reconnect', function() {
+    if ($('#usernameTxt').val().length > 0) {
+      socket.emit('username', $('#usernameTxt').val());
+    }
+  })
+
+  var picker = new EmojiButton({
+    position: 'top-start',
+    theme: 'dark',
+    style: 'native'
+  });
   var button = document.querySelector('#emojiButton');
 
   picker.on('emoji', emoji => {
     document.querySelector('#txt').value += emoji;
   });
 
-  button.addEventListener('click', function () {
+  button.addEventListener('click', function() {
     picker.togglePicker(button);
   });
 }
 
 function scrollToMessage() {
-  $('#chatContainer').animate({scrollTop: $('#chatContainer').prop("scrollHeight")}, 400);
+  $('#chatContainer').animate({
+    scrollTop: $('#chatContainer').prop("scrollHeight")
+  }, 400);
 }
 
 function showMessage(message) {
   $('#messages').append($('<li>').html(message));
   scrollToMessage();
+}
+
+function sanatizeInput(input) {
+  var temp = document.createElement('div');
+  temp.textContent = input ;
+  var sanatizedOut = temp.innerHTML;
+  temp.remove();
+  return sanatizedOut;
 }
