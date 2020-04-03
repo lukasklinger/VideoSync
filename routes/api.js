@@ -17,15 +17,9 @@ router.post('/state', (req, res) => {
   }
 
   if(req.body.start == 'true'){
-    if(tickInterval == undefined) {
-      tickInterval = setInterval(tick, 1000);
-      playing = true;
-    }
+    startPlayback();
   } else if (req.body.reset == 'true'){
-    clearInterval(tickInterval);
-    tickInterval = undefined;
-    currTime = 0;
-    playing = false;
+    resetPlayback();
   } else if (req.body.title != undefined) {
     title = req.body.title;
   } else if (req.body.time != undefined) {
@@ -34,6 +28,20 @@ router.post('/state', (req, res) => {
 
   res.json({time: currTime, title: title, playing: playing});
 });
+
+function resetPlayback() {
+  clearInterval(tickInterval);
+  tickInterval = undefined;
+  currTime = 0;
+  playing = false;
+}
+
+function startPlayback() {
+  if(tickInterval == undefined) {
+    tickInterval = setInterval(tick, 1000);
+    playing = true;
+  }
+}
 
 function tick() {
   currTime++;

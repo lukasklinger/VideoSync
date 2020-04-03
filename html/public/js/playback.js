@@ -1,13 +1,18 @@
 var player;
-var initSync = false;
+var syncCount = 0;
 
 function initPlayback() {
   player = document.getElementById("player");
 
   player.onplay = function() {
-    if(!initSync){
-      initSync = true;
-      setTimeout(syncPlay, 500);
+    if(syncCount == 0){
+      setTimeout(syncPlay, 100);
+    }
+  };
+
+  player.onseeked = function() {
+    if(syncCount == 1){
+      syncPlay();
     }
   };
 
@@ -18,7 +23,8 @@ function initPlayback() {
 function syncPlay() {
   $.get( "/api/state", (data) => {
     if(parseInt(data.time) != 0){
-      initSync = true;
+      console.log("Syncing video with server.");
+      syncCount++;
       player.play();
       player.currentTime = parseInt(data.time);
     }
