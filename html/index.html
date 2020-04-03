@@ -19,7 +19,7 @@
   <body>
     <div class="columns is-marginless is-paddingless">
       <div class="column is-three-quarters">
-        <video src="video.mp4" preload controls id="player"></video>
+        <video src="video.mp4" controls id="player"></video>
       </div>
       <div class="column" id="sideColumn">
         <div class="container" style="padding-bottom: 7px;">
@@ -43,9 +43,9 @@
         <div class="container" id="messageInputContainer">
           <form action="/" method="POST" id="chatForm">
             <div class="field has-addons">
-              <p class="control"><button id="emojiButton" class="button" type="button" name="button">😀</button></p>
-              <p class="control"><input id="txt" class="input" type="text" data-lpignore="true" autocomplete="off" placeholder="type your message here..." style="width: 100%;"/></p>
-              <p class="control"><button class="button is-dark">Send</button></p>
+              <div class="control"><button id="emojiButton" class="button" type="button" name="button">😀</button></div>
+              <div class="control" style="flex: 1;"><input id="txt" class="input" type="text" data-lpignore="true" autocomplete="off" placeholder="type your message here..." style="width: 100%;"/></div>
+              <div class="control"><button class="button is-dark">Send</button></div>
             </div>
           </form>
         </div>
@@ -54,7 +54,7 @@
           <form action="/" method="POST" id="usernameForm">
             <p class="has-text-light">Enter Username:</p>
             <div class="field has-addons">
-              <input id="usernameTxt" class="input" type="text" data-lpignore="true" autocomplete="off" placeholder="Enter Username" style="width: 100%;"/>
+              <input id="usernameTxt" class="input" type="text" data-lpignore="true" autocomplete="off" placeholder="Enter Username" style="flex: 1;"/>
               <button class="button is-dark">Enter</button>
             </div>
           </form>

@@ -1,6 +1,3 @@
-function init() {
-}
-
 function startPlayback() {
   $.post('/api/state', {start: true}, data => {
     if(data.playing == true){
@@ -28,6 +25,19 @@ function saveTitle() {
 
   $.post('/api/state', {title: title}, data => {
     if(data.title == title){
+      bulmaToast.toast({message: "Done"});
+    } else {
+      bulmaToast.toast({message: "Error", type: "is-danger"});
+      console.log(data);
+    }
+  }, 'json');
+}
+
+function setTime() {
+  var time = parseInt($("#timeInput").val());
+
+  $.post('/api/state', {time: time}, data => {
+    if(data.time == time){
       bulmaToast.toast({message: "Done"});
     } else {
       bulmaToast.toast({message: "Error", type: "is-danger"});

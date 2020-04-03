@@ -28,6 +28,8 @@ router.post('/state', (req, res) => {
     playing = false;
   } else if (req.body.title != undefined) {
     title = req.body.title;
+  } else if (req.body.time != undefined) {
+    currTime = req.body.time;
   }
 
   res.json({time: currTime, title: title, playing: playing});

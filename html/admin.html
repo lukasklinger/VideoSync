@@ -44,6 +44,14 @@
           <p class="control">
             <button class="button" name="reset" onclick="resetPlayback()">Reset</button>
           </p>
+          <div class="field has-addons">
+            <div class="control">
+              <input id="timeInput" class="input" type="number" placeholder="Set current time (in seconds)">
+            </div>
+            <div class="control">
+              <button class="button is-info" onclick="setTime()">Set</button>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -68,8 +76,4 @@
     </section>
 
   </body>
-
-  <script type="text/javascript">
-    init();
-  </script>
 </html>

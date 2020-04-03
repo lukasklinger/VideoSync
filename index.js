@@ -33,7 +33,7 @@ app.get('/', function(req, res){
     return res.redirect('/pin');
   }
 
-  res.sendFile(path.join(__dirname, './html', 'home.html'));
+  res.sendFile(path.join(__dirname, './html', 'index.html'));
 });
 
 app.get('/video', function(req, res){
