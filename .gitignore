@@ -109,3 +109,4 @@ dist
 
 # ignore videos for testing
 *.mp4
+*.vtt

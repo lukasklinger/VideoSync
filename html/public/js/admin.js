@@ -45,3 +45,35 @@ function setTime() {
     }
   }, 'json');
 }
+
+function addSubtitle() {
+  $("#subtitleInput").clone().appendTo("#subtitleInputGroup").show();
+}
+
+function removeSubtitle() {
+  $("#subtitleInputGroup").children().last().remove();
+}
+
+function setVideo() {
+  var video = $("#videoInput").val();
+  var subtitles = [];
+
+  $("#subtitleInputGroup").children().each(function (i) {
+    var label = $(this).find("#subtitleLabel").val();
+    var lang = $(this).find("#subtitleLang").val();
+    var src = $(this).find("#subtitlePath").val();
+
+    subtitles.push({label: label, lang: lang, src: src});
+  });
+
+  console.log(subtitles);
+
+  $.post('/api/state', {video: video, subtitles: subtitles}, data => {
+    if(data.video == video){
+      bulmaToast.toast({message: "Done"});
+    } else {
+      bulmaToast.toast({message: "Error", type: "is-danger"});
+      console.log(data);
+    }
+  }, 'json');
+}

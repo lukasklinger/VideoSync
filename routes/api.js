@@ -6,9 +6,12 @@ var tickInterval;
 var playing = false;
 var currTime = 0;
 var title = "";
+var video = "video.mp4";
+var subtitles = [];
+//[{label: "Deutsch", lang: "de", src: "sub_de.vtt"}, {label: "English", lang: "en", src: "sub_en.vtt"}];
 
 router.get('/state', function(req, res) {
-  res.json({time: currTime, title: title, playing: playing});
+  res.json(getState());
 });
 
 router.post('/state', (req, res) => {
@@ -26,8 +29,20 @@ router.post('/state', (req, res) => {
     currTime = req.body.time;
   }
 
-  res.json({time: currTime, title: title, playing: playing});
+  if (req.body.video != undefined) {
+    video = req.body.video;
+  }
+
+  if (req.body.subtitles != undefined) {
+    subtitles = req.body.subtitles;
+  }
+
+  res.json(getState());
 });
+
+function getState() {
+  return {time: currTime, title: title, playing: playing, video: video, subtitles: subtitles};
+}
 
 function resetPlayback() {
   clearInterval(tickInterval);

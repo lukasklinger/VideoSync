@@ -31,6 +31,53 @@
       <br>
 
       <div class="container">
+        <h1 class="title">Set Files</h1>
+      </div>
+
+      <br>
+
+      <div class="container">
+        <h2 class="subtitle">Set Video File Path</h2>
+        <div class="field">
+          <div class="control">
+            <input id="videoInput" class="input" type="text" placeholder="Set video path">
+          </div>
+        </div>
+
+        <h2 class="subtitle">Add Subtitle Paths</h2>
+        <div class="field is-grouped">
+          <div class="control">
+            <button class="button is-success" name="button" onclick="addSubtitle()">Add</button>
+          </div>
+          <div class="control">
+            <button class="button is-danger" onclick="removeSubtitle()">Remove</button>
+          </div>
+        </div>
+
+        <div id="subtitleInputGroup"></div>
+
+        <div class="field is-grouped" id="subtitleInput" style="display: none;">
+          <div class="control">
+            <input id="subtitlePath" class="input" type="text" placeholder="Set subtitle path">
+          </div>
+          <div class="control">
+            <input id="subtitleLabel" class="input" type="text" placeholder="Set subtitle label">
+          </div>
+          <div class="control">
+            <input id="subtitleLang" class="input" type="text" placeholder="Set subtitle language (e.g. en, fr, de)">
+          </div>
+        </div>
+
+        <br>
+
+        <div class="control">
+          <button class="button is-info" onclick="setVideo()">Set</button>
+        </div>
+      </div>
+
+      <br>
+
+      <div class="container">
         <h1 class="title">Playback Control</h1>
       </div>
 
