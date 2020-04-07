@@ -6,7 +6,7 @@ var chat = true;
 var video = true;
 
 function initPlayback() {
-  player = $("#player");
+  player = document.getElementById('player');
 
   getVideo();
   getTitle();
@@ -112,5 +112,17 @@ function toggleChat() {
     $('#sideColumn').show();
     $('#optionContainerUnderVideo').hide();
     $('#videoColumn').addClass('is-three-quarters');
+  }
+}
+
+function toggleVideo() {
+  if(video) {
+    video = false;
+    $('#videoColumn').hide();
+    $('#videoToggleButton').html('Enable Video');
+  } else {
+    video = true;
+    $('#videoColumn').show();
+    $('#videoToggleButton').html('Disable Video');
   }
 }
