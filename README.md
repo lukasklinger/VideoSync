@@ -73,6 +73,9 @@ docker-compose down
     * added autosync
     * discard empty chat messages
     * sync more precise when starting playback
+* 1.2.0
+    * user can hide chat or video
+    * subtitles supported (vtt)
 
 ## Meta
 
