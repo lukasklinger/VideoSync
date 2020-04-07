@@ -1,5 +1,4 @@
 html {
-  background-color: black;
   height: 100vh;
   width: 100vw;
   overflow: hidden;
@@ -7,6 +6,7 @@ html {
 
 body {
   height: 100%;
+  background-color: black;
 }
 
 .column, .columns {
@@ -15,8 +15,6 @@ body {
 
 #player {
   position: relative;
-  top: 50%;
-  transform: translateY(-50%);
   height: 100%;
   width: 100%;
 }
@@ -24,10 +22,6 @@ body {
 #sideColumn {
   display: grid;
   grid-template-rows: [row1-start] max-content [row1-end] max-content [third-line] auto [fourth-line] max-content [last-line];
-}
-
-#videoColumn {
-  overflow-y: auto;
 }
 
 #usernameContainer {

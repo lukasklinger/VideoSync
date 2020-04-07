@@ -107,11 +107,13 @@ function toggleChat() {
     $('#sideColumn').hide();
     $('#optionContainerUnderVideo').show();
     $('#videoColumn').removeClass('is-three-quarters');
+    $("#videoColumn").css("overflow-y", "scroll");
   } else {
     chat = true;
     $('#sideColumn').show();
     $('#optionContainerUnderVideo').hide();
     $('#videoColumn').addClass('is-three-quarters');
+    $("#videoColumn").css("overflow-y", "hidden");
   }
 }
 
