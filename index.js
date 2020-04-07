@@ -36,14 +36,6 @@ app.get('/', function(req, res){
   res.sendFile(path.join(__dirname, './html', 'index.html'));
 });
 
-app.get('/video', function(req, res){
-  if(watchPin != undefined && req.session.watchPin != watchPin) {
-    return res.redirect('/pin');
-  }
-
-  res.sendFile(path.join(__dirname, './html', 'video.html'));
-});
-
 app.get('/admin', function(req, res){
   if(req.session.adminPin != adminPin) {
     return res.redirect('/pin');

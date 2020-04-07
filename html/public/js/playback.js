@@ -2,6 +2,8 @@ var player;
 var syncCount = 0;
 var autoSyncActive = true;
 var currentState;
+var chat = true;
+var video = true;
 
 function initPlayback() {
   player = $("#player");
@@ -96,5 +98,19 @@ function disableAutoSync() {
     autoSyncActive = true;
     $('#autoSyncButton').html('Disable Auto-Sync');
     showMessage("<i>Auto-Sync enabeled.</i>");
+  }
+}
+
+function toggleChat() {
+  if(chat) {
+    chat = false;
+    $('#sideColumn').hide();
+    $('#optionContainerUnderVideo').show();
+    $('#videoColumn').removeClass('is-three-quarters');
+  } else {
+    chat = true;
+    $('#sideColumn').show();
+    $('#optionContainerUnderVideo').hide();
+    $('#videoColumn').addClass('is-three-quarters');
   }
 }

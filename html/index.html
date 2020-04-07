@@ -18,9 +18,17 @@
 
   <body>
     <div class="columns is-marginless is-paddingless">
-      <div class="column is-three-quarters">
+      <div id="videoColumn" class="column is-three-quarters">
         <video id="player" controls></video>
+
+        <div id="optionContainerUnderVideo">
+          <button class="button is-small" name="button" onclick="syncPlay()" title="Synchronize Playback with Server">Re-Sync</button>
+          <button class="button is-small" name="button" onclick="toggleChat()">Enable Chat</button>
+          <a href="/admin" class="button is-small">Admin</a>
+          <button id="autoSyncButton" class="button is-small" name="button" onclick="disableAutoSync()" title="Disable/Enable Auto-Syncing">Disable Auto-Sync</button>
+        </div>
       </div>
+
       <div class="column" id="sideColumn">
         <div class="container" style="padding-bottom: 7px;">
           <h1 class="subtitle has-text-light"></h1>
@@ -31,7 +39,7 @@
 
           <div id="optionContainer">
             <button class="button is-small" name="button" onclick="syncPlay()" title="Synchronize Playback with Server">Re-Sync</button>
-            <a href="/video" class="button is-small">Disable Chat</a>
+            <button class="button is-small" name="button" onclick="toggleChat()">Disable Chat</button>
             <a href="/admin" class="button is-small">Admin</a>
             <button id="autoSyncButton" class="button is-small" name="button" onclick="disableAutoSync()" title="Disable/Enable Auto-Syncing">Disable Auto-Sync</button>
           </div>

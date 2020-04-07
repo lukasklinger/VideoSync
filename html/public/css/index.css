@@ -26,6 +26,10 @@ body {
   grid-template-rows: [row1-start] max-content [row1-end] max-content [third-line] auto [fourth-line] max-content [last-line];
 }
 
+#videoColumn {
+  overflow-y: auto;
+}
+
 #usernameContainer {
   display: none;
   width: 100%;
@@ -54,6 +58,10 @@ body {
 #optionContainer {
   display: none;
   width: 100%;
+}
+
+#optionContainerUnderVideo {
+  display: none;
 }
 
 #messages {
