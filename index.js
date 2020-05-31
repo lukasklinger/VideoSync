@@ -26,7 +26,8 @@ app.use(session({
 }));
 
 app.use(express.static('./html/public'));
-app.use(express.static('./video'));
+app.use('/static', (req, res, next) => {checkForAuthStatic(req, res, next)});
+app.use('/static', express.static('./video'));
 
 app.use('/api', api.router);
 
@@ -82,5 +83,14 @@ io.sockets.on('connection', function(socket) {
     io.emit('chat_message', '<span>' + socket.username + '</span>: ' + message);
   });
 });
+
+function checkForAuthStatic(req, res, next) {
+  if(watchPin != undefined && req.session.watchPin != watchPin) {
+    res.statusCode = 401;
+    res.send('401 Unauthorized');
+  } else {
+    next();
+  }
+}
 
 server.listen(3000, () => {console.log("Listening on port 3000.");});

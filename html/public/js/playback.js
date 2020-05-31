@@ -24,7 +24,7 @@ function initPlayback() {
   };
 
   setInterval(getTitle, 10000);
-  setInterval(autoSync, 2000);
+  setInterval(autoSync, 30000);
 }
 
 function autoSync() {
@@ -70,7 +70,7 @@ function getVideo() {
     source = document.createElement("source");
 
     source.type = "video/mp4";
-    source.src = data.video;
+    source.src = `/static/${data.video}`;
 
     player.append(source);
 
@@ -81,7 +81,7 @@ function getVideo() {
         track.kind = "captions";
         track.label = data.subtitles[i].label;
         track.srclang = data.subtitles[i].lang;
-        track.src = data.subtitles[i].src;
+        track.src = `/static/${data.subtitles[i].src}`;
 
         player.append(track);
       }
