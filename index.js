@@ -12,6 +12,8 @@ const path = require('path');
 const watchPin = process.env.WATCH_PIN;
 const adminPin = process.env.ADMIN_PIN || '4542';
 
+var userCount = 0;
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({
     cookie: { maxAge: 86400000 },
@@ -65,12 +67,14 @@ app.post('/pin', function(req, res){
 io.sockets.on('connection', function(socket) {
   socket.on('username', function(username) {
     socket.username = username;
-    io.emit('is_online', '🔵 <i>' + socket.username + ' joined.</i>');
+    userCount++;
+    io.emit('is_online', `🔵 <i> ${socket.username} joined. (Users: ${userCount})</i>`);
   });
 
   socket.on('disconnect', function(username) {
     if(socket.username != undefined) {
-      io.emit('is_online', '🔴 <i>' + socket.username + ' left.</i>');
+      userCount--;
+      io.emit('is_online', `🔴 <i> ${socket.username} left. (Users: ${userCount})</i>`);
     }
   })
 
