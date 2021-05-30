@@ -2,10 +2,7 @@ version: '2'
 
 services:
   videosync:
-    image: videosync:latest
-    build:
-      dockerfile: Dockerfile
-      context: .
+    image: lukasklinger/videosync:latest
     restart: unless-stopped
     ports:
       - 3000:3000
