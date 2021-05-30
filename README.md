@@ -34,7 +34,7 @@ If all environment variables are set correctly, VideoSync will run on port **300
 
 ## Docker
 ### Dockerfile
-This repository also includes a Dockerfile. Simply build it like this
+This repository also includes a Dockerfile (and a pre-built Docker image on Docker Hub: lukasklinger/videosync). Simply build it like this
 
 ```sh
 docker build -t videosync .
@@ -43,7 +43,7 @@ docker build -t videosync .
 and run it like this
 
 ```sh
-docker run -p 3000:3000 [-e WATCH_PIN=dmx] -e ADMIN_PIN=4542 -v /path/to/video.mp4:/app/video/video.mp4 videosync
+docker run -p 3000:3000 [-e WATCH_PIN=dmx] -e ADMIN_PIN=4542 -v /path/to/video.mp4:/app/video/video.mp4 lukasklinger/videosync
 ```
 Explanation:
 * **-p 3000:3000**: Maps host port 3000 to the app's listening port 3000. Change first port to suit your setup.
