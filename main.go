@@ -12,12 +12,11 @@ func main() {
 	// read config from environment
 	config.Init()
 
-	// provide HTTP server and router
+	// start HTTP server
 	server.Init()
 
-	// provide access management
-
-	// provide socket.io server
+	// provide socket.io server for chat
 
 	// upload for videos and subtitles?
+
 }

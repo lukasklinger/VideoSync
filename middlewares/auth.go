@@ -1,37 +1,45 @@
 package middlewares
 
 import (
+	"net/http"
+	"strings"
+
+	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
+	"github.com/lukasklinger/VideoSync/config"
 )
 
 func AuthMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		//adminPIN := config.GetAdminPIN()
-		//watchPIN := config.GetWatchPIN()
+		adminPIN := config.GetAdminPIN()
+		watchPIN := config.GetWatchPIN()
+		session := sessions.Default(c)
 
-		// TODO session
+		// protect watch interface
+		if strings.Contains(c.Request.URL.Path, "watch") {
+			if watchPIN != "" && watchPIN != session.Get("watchPIN") {
+				c.Redirect(http.StatusFound, "/pin")
+				c.Abort()
+			}
+		}
 
-		//if strings.Contains(c.Request.URL.Path, "admin") {
-		// TODO compare admin PIN from cookie
-		//}
+		// protect video folder
+		if strings.Contains(c.Request.URL.Path, "video") {
+			if watchPIN != "" && watchPIN != session.Get("watchPIN") {
+				c.Redirect(http.StatusFound, "/pin")
+				c.Abort()
+			}
+		}
 
-		//if strings.Contains(c.Request.URL.Path, "watch") {
-		// TODO compare watch PIN from cookie
-		//}
+		// protect admin interface
+		if strings.Contains(c.Request.URL.Path, "admin") {
+			if adminPIN != session.Get("adminPIN") {
+				c.Redirect(http.StatusFound, "/pin")
+				c.Abort()
+			}
+		}
 
-		// if key = config.GetString("http.auth.key"); len(strings.TrimSpace(key)) == 0 {
-		// 	c.AbortWithStatus(500)
-		// }
-
-		// if secret = config.GetString("http.auth.secret"); len(strings.TrimSpace(secret)) == 0 {
-		// 	c.AbortWithStatus(401)
-		// }
-
-		// if key != reqKey || secret != reqSecret {
-		// 	c.AbortWithStatus(401)
-		// 	return
-		// }
-
+		// all checks passed, proceed
 		c.Next()
 	}
 }
