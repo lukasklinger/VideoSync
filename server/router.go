@@ -3,22 +3,24 @@ package server
 import (
 	"net/http"
 
+	"github.com/chenjiandongx/ginprom"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/memstore"
 	"github.com/gin-gonic/gin"
 	"github.com/lukasklinger/VideoSync/controllers"
 	"github.com/lukasklinger/VideoSync/middlewares"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 func NewRouter() *gin.Engine {
 	router := gin.New()
-	sessionStore := memstore.NewStore([]byte("bananaphoneSecretPower!"))
 
 	// Configure router and middleware
 	router.Use(gin.Logger())
 	router.Use(gin.Recovery())
-	router.Use(sessions.Sessions("defaultStore", sessionStore))
+	router.Use(sessions.Sessions("defaultStore", memstore.NewStore([]byte("bananaphoneSecretPower!"))))
 	router.Use(middlewares.AuthMiddleware())
+	router.Use(ginprom.PromMiddleware(nil))
 
 	// Set up static file paths
 	router.Static("/assets", "./public/public/assets")
@@ -33,9 +35,14 @@ func NewRouter() *gin.Engine {
 	router.GET("/health", new(controllers.HealthController).Status)
 
 	// Set up authentication flow routing
-	pin := new(controllers.PINController)
-	router.POST("/pin", pin.Authenticate)
+	router.POST("/pin", new(controllers.PINController).Authenticate)
 	router.GET("/pin", func(c *gin.Context) { c.File("./public/pin.html") })
+
+	// Set up Prometheus export
+	router.GET("/metrics", ginprom.PromHandler(promhttp.Handler()))
+
+	// Set up websocket routing
+	router.GET("/ws", new(controllers.WebSocketsController).Serve)
 
 	// Set up API route group
 	apiGroup := router.Group("api")
