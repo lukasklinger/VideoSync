@@ -18,9 +18,9 @@ func NewRouter() *gin.Engine {
 	// Configure router and middleware
 	router.Use(gin.Logger())
 	router.Use(gin.Recovery())
+	router.Use(ginprom.PromMiddleware(nil))
 	router.Use(sessions.Sessions("defaultStore", memstore.NewStore([]byte("bananaphoneSecretPower!"))))
 	router.Use(middlewares.AuthMiddleware())
-	router.Use(ginprom.PromMiddleware(nil))
 
 	// Set up static file paths
 	router.Static("/assets", "./public/public/assets")
