@@ -15,6 +15,8 @@ func main() {
 	// start HTTP server
 	server.Init()
 
+	// finish API
+
 	// update frontend
 
 	// upload for videos and subtitles?
