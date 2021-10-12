@@ -15,7 +15,7 @@ func main() {
 	// start HTTP server
 	server.Init()
 
-	// provide chat
+	// update frontend
 
 	// upload for videos and subtitles?
 

@@ -2,25 +2,32 @@ package controllers
 
 import (
 	"github.com/gin-gonic/gin"
-	"gopkg.in/olahol/melody.v1"
+	"github.com/gorilla/websocket"
+	"github.com/lukasklinger/VideoSync/model"
+	log "github.com/sirupsen/logrus"
 )
 
 type WebSocketsController struct {
-	melody *melody.Melody
+	Pool *model.Pool
+}
+
+var wsupgrader = websocket.Upgrader{
+	ReadBufferSize:  1024,
+	WriteBufferSize: 1024,
+}
+
+func NewWebsocketController(pool *model.Pool) WebSocketsController {
+	return WebSocketsController{Pool: pool}
 }
 
 func (w WebSocketsController) Serve(c *gin.Context) {
-	if w.melody == nil {
-		w.init()
+	connection, err := wsupgrader.Upgrade(c.Writer, c.Request, nil)
+	if err != nil {
+		log.Debug("Error upgrading websocket connection: %v", err)
 	}
 
-	w.melody.HandleRequest(c.Writer, c.Request)
-}
+	client := &model.Client{Conn: connection, Pool: w.Pool}
 
-func (w WebSocketsController) init() {
-	w.melody = melody.New()
-
-	w.melody.HandleMessage(func(s *melody.Session, msg []byte) {
-		w.melody.Broadcast(msg)
-	})
+	w.Pool.Register <- client
+	client.Read()
 }

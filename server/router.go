@@ -9,6 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/lukasklinger/VideoSync/controllers"
 	"github.com/lukasklinger/VideoSync/middlewares"
+	"github.com/lukasklinger/VideoSync/model"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
@@ -41,8 +42,13 @@ func NewRouter() *gin.Engine {
 	// Set up Prometheus export
 	router.GET("/metrics", ginprom.PromHandler(promhttp.Handler()))
 
+	// Set up websocket pool
+	pool := model.NewPool()
+	go pool.Start()
+
 	// Set up websocket routing
-	router.GET("/ws", new(controllers.WebSocketsController).Serve)
+	ws := controllers.NewWebsocketController(pool)
+	router.GET("/ws", ws.Serve)
 
 	// Set up API route group
 	apiGroup := router.Group("api")

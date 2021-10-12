@@ -1,4 +1,7 @@
-var socket = io.connect();
+const url = "ws://" + window.location.host + "/ws"
+const ws = new WebSocket(url)
+
+var username
 
 function initChat() {
   $('#usernameContainer').show()
@@ -7,40 +10,35 @@ function initChat() {
   $('#chatForm').submit(function(e) {
     e.preventDefault(); // prevents page reloading
 
-    var message = $('#txt').val();
+    var message = $('#txt').val()
     if (message.length > 0) {
-      socket.emit('chat_message', sanatizeInput($('#txt').val()));
-      $('#txt').val('');
+      var message = {"username": username, "content": sanatizeInput($('#txt').val())}
+      ws.send(JSON.stringify(message))
+      $('#txt').val('')
     }
 
     return false;
   });
 
-  // submit username without reload/refresh the page
+  // save username without reload/refresh the page
   $('#usernameForm').submit(function(e) {
-    e.preventDefault(); // prevents page reloading
-    socket.emit('username', sanatizeInput($('#usernameTxt').val()));
-    $('#usernameContainer').hide();
-    $('#messageInputContainer').show();
+    e.preventDefault() // prevents page reloading
+
+    if ($('#usernameTxt').val().length > 0) {
+      username = sanatizeInput($('#usernameTxt').val())
+      ws.send(JSON.stringify({"username": username, "content": "joined"}))
+  
+      $('#usernameContainer').hide();
+      $('#messageInputContainer').show();
+    }
+
     return false;
   });
 
   // append the chat text message
-  socket.on('chat_message', function(msg) {
-    showMessage(msg);
-  });
-
-  // append text if someone is online/offline
-  socket.on('is_online', function(username) {
-    showMessage(username);
-  });
-
-  // retransmit username if reconnected
-  socket.on('reconnect', function() {
-    if ($('#usernameTxt').val().length > 0) {
-      socket.emit('username', $('#usernameTxt').val());
-    }
-  })
+  ws.onmessage = function (msg){
+    showMessage(JSON.parse(msg.data))
+  }
 
   var picker = new EmojiButton({
     position: 'top-start',
@@ -65,7 +63,8 @@ function scrollToMessage() {
 }
 
 function showMessage(message) {
-  $('#messages').append($('<li>').html(message));
+  var msgObj = JSON.parse(message.body)
+  $('#messages').append($('<li>').html(msgObj.username + ": " + msgObj.content));
   scrollToMessage();
 }
 
