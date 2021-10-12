@@ -6,36 +6,34 @@ var chat = true;
 var video = true;
 
 function initPlayback() {
-  player = document.getElementById('player');
+  player = document.getElementById('player')
 
-  getVideo();
-  getTitle();
+  getVideo()
+  getTitle()
 
-  player.onplay = function() {
-    if(syncCount == 0){
-      setTimeout(syncPlay, 100);
+  player.onplay = function () {
+    if (syncCount == 0) {
+      setTimeout(syncPlay, 100)
     }
   };
 
-  player.onseeked = function() {
-    if(syncCount == 1){
-      syncPlay();
+  player.onseeked = function () {
+    if (syncCount == 1) {
+      syncPlay()
     }
   };
 
-  setInterval(getTitle, 10000);
-  setInterval(autoSync, 30000);
+  setInterval(getTitle, 10000)
+  setInterval(autoSync, 30000)
 }
 
 function autoSync() {
-  if(autoSyncActive){
-    $.get( "/api/state", (data) => {
-      if(autoSyncActive && player.paused != true) {
-        if (syncCount > 1) {
-          if (((parseInt(data.time) - player.currentTime) > 5) || ((parseInt(data.time) - player.currentTime) < -5)) {
-            syncPlay();
-            showMessage("<i>More than 5 seconds delay from server time, auto-syncing video. Disable in options.</i>");
-          }
+  if (autoSyncActive) {
+    $.get("/api/state", (data) => {
+      if (autoSyncActive && syncCount > 1) {
+        if (((parseInt(data.Playback.Seconds) - player.currentTime) > 5) || ((parseInt(data.Playback.Seconds) - player.currentTime) < -5)) {
+          showMessage("<i>More than 5 seconds delay from server time, auto-syncing video. Disable in options.</i>")
+          syncPlay()
         }
       }
     });
@@ -43,88 +41,93 @@ function autoSync() {
 }
 
 function syncPlay() {
-  $.get( "/api/state", (data) => {
-    if(parseInt(data.time) != 0){
-      console.log("Syncing video with server.");
-      syncCount++;
-      player.play();
-      player.currentTime = parseInt(data.time);
+  $.get("/api/state", (data) => {
+    if (parseInt(data.Playback.Seconds) != 0) {
+      console.log("Syncing video with server.")
+      syncCount++
+      player.currentTime = parseInt(data.Playback.Seconds)
+    }
+
+    if (data.Playback.PlaybackRunning) {
+      player.play()
+    } else {
+      player.pause()
     }
   });
 }
 
 function getTitle() {
-  $.get( "/api/state", (data) => {
-    if(data.title.length > 0) {
-      $('h1').text(data.title);
-      document.title = 'Playing ' + data.title;
+  $.get("/api/state", (data) => {
+    if (data.Video.Title.length > 0) {
+      $('h1').text(data.title)
+      document.title = 'Playing ' + data.Video.Title
     } else {
-      $('h1').text("");
-      document.title = 'VideoSync';
+      $('h1').text("")
+      document.title = 'VideoSync'
     }
   });
 }
 
 function getVideo() {
-  $.get( "/api/state", (data) => {
-    source = document.createElement("source");
+  $.get("/api/state", (data) => {
+    source = document.createElement("source")
 
-    source.type = "video/mp4";
-    source.src = `/static/${data.video}`;
+    source.type = "video/mp4"
+    source.src = `/static/${data.Video.Path}`
 
-    player.append(source);
+    player.append(source)
 
-    if(data.subtitles.length > 0) {
-      for (var i = 0; i < data.subtitles.length; i++){
-        track = document.createElement("track");
+    if (data.Subtitles != undefined && data.Subtitles.length > 0) {
+      for (var i = 0; i < data.Subtitles.length; i++) {
+        track = document.createElement("track")
 
-        track.kind = "captions";
-        track.label = data.subtitles[i].label;
-        track.srclang = data.subtitles[i].lang;
-        track.src = `/static/${data.subtitles[i].src}`;
+        track.kind = "captions"
+        track.label = data.Subtitles[i].Language
+        track.srclang = data.Subtitles[i].LanguageCode
+        track.src = `/static/${data.Subtitles[i].Path}`
 
-        player.append(track);
+        player.append(track)
       }
     }
   });
 }
 
 function disableAutoSync() {
-  if(autoSyncActive) {
-    autoSyncActive = false;
-    $('#autoSyncButton').html('Enable Auto-Sync');
-    showMessage("<i>Auto-Sync disabeled.</i>");
+  if (autoSyncActive) {
+    autoSyncActive = false
+    $('#autoSyncButton').html('Enable Auto-Sync')
+    showMessage("<i>Auto-Sync disabeled.</i>")
   } else {
-    autoSyncActive = true;
-    $('#autoSyncButton').html('Disable Auto-Sync');
-    showMessage("<i>Auto-Sync enabeled.</i>");
+    autoSyncActive = true
+    $('#autoSyncButton').html('Disable Auto-Sync')
+    showMessage("<i>Auto-Sync enabeled.</i>")
   }
 }
 
 function toggleChat() {
-  if(chat) {
-    chat = false;
-    $('#sideColumn').hide();
-    $('#optionContainerUnderVideo').show();
-    $('#videoColumn').removeClass('is-three-quarters');
-    $("#videoColumn").css("overflow-y", "scroll");
+  if (chat) {
+    chat = false
+    $('#sideColumn').hide()
+    $('#optionContainerUnderVideo').show()
+    $('#videoColumn').removeClass('is-three-quarters')
+    $("#videoColumn").css("overflow-y", "scroll")
   } else {
-    chat = true;
-    $('#sideColumn').show();
-    $('#optionContainerUnderVideo').hide();
-    $('#videoColumn').addClass('is-three-quarters');
-    $("#videoColumn").css("overflow-y", "hidden");
+    chat = true
+    $('#sideColumn').show()
+    $('#optionContainerUnderVideo').hide()
+    $('#videoColumn').addClass('is-three-quarters')
+    $("#videoColumn").css("overflow-y", "hidden")
   }
 }
 
 function toggleVideo() {
-  if(video) {
-    video = false;
-    $('#videoColumn').hide();
-    $('#videoToggleButton').html('Enable Video');
+  if (video) {
+    video = false
+    $('#videoColumn').hide()
+    $('#videoToggleButton').html('Enable Video')
   } else {
     video = true;
-    $('#videoColumn').show();
-    $('#videoToggleButton').html('Disable Video');
+    $('#videoColumn').show()
+    $('#videoToggleButton').html('Disable Video')
   }
 }

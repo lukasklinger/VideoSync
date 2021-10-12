@@ -27,7 +27,7 @@ func (pool *Pool) Start() {
 			pool.Clients[client] = true
 			log.Debug("Size of Connection Pool: ", len(pool.Clients))
 
-			for client, _ := range pool.Clients {
+			for client := range pool.Clients {
 				log.Debug(client)
 				client.Conn.WriteJSON(Message{Type: 1, Body: "New User Joined..."})
 			}
@@ -36,14 +36,14 @@ func (pool *Pool) Start() {
 			delete(pool.Clients, client)
 			log.Debug("Size of Connection Pool: ", len(pool.Clients))
 
-			for client, _ := range pool.Clients {
+			for client := range pool.Clients {
 				client.Conn.WriteJSON(Message{Type: 1, Body: "User Disconnected..."})
 			}
 
 		case message := <-pool.Broadcast:
 			log.Debug("Sending message to all clients in Pool")
 
-			for client, _ := range pool.Clients {
+			for client := range pool.Clients {
 				if err := client.Conn.WriteJSON(message); err != nil {
 					log.Debug(err)
 					return
