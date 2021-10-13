@@ -21,4 +21,5 @@ func main() {
 
 	// upload for videos and subtitles?
 
+	// allow clients to (un-)pause
 }

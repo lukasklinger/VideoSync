@@ -1,5 +1,5 @@
 function startPlayback() {
-  $.post('/api/state', {start: true}, data => {
+  $.post('/api/state', {"command": "start", "value": "true"}, data => {
     if(data.playing == true){
       bulmaToast.toast({message: "Done"});
     } else {
@@ -10,7 +10,7 @@ function startPlayback() {
 }
 
 function resetPlayback() {
-  $.post('/api/state', {reset: true}, data => {
+  $.post('/api/state', {"command": "reset", "value": "true"}, data => {
     if(data.playing == false){
       bulmaToast.toast({message: "Done"});
     } else {
@@ -23,7 +23,7 @@ function resetPlayback() {
 function saveTitle() {
   var title = $("#titleInput").val();
 
-  $.post('/api/state', {title: title}, data => {
+  $.post('/api/state', {"command": "title", "value": title}, data => {
     if(data.title == title){
       bulmaToast.toast({message: "Done"});
     } else {
@@ -36,7 +36,7 @@ function saveTitle() {
 function setTime() {
   var time = parseInt($("#timeInput").val());
 
-  $.post('/api/state', {time: time}, data => {
+  $.post('/api/state', {"command": "time", "value": time}, data => {
     if(data.time == time){
       bulmaToast.toast({message: "Done"});
     } else {
@@ -68,7 +68,16 @@ function setVideo() {
 
   console.log(subtitles);
 
-  $.post('/api/state', {video: video, subtitles: subtitles}, data => {
+  $.post('/api/state', {"command": "video", "value": video}, data => {
+    if(data.video == video){
+      bulmaToast.toast({message: "Done"});
+    } else {
+      bulmaToast.toast({message: "Error", type: "is-danger"});
+      console.log(data);
+    }
+  }, 'json');
+
+  $.post('/api/state', {"command": "subtitles", "values": subtitles}, data => {
     if(data.video == video){
       bulmaToast.toast({message: "Done"});
     } else {

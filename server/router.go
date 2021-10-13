@@ -53,9 +53,9 @@ func NewRouter() *gin.Engine {
 	// Set up API route group
 	apiGroup := router.Group("api")
 	{
-		// TODO
 		api := new(controllers.APIController)
 		apiGroup.GET("/state", api.GetState)
+		apiGroup.POST("/state", api.PostState)
 	}
 
 	return router
