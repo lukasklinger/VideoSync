@@ -20,7 +20,7 @@ npm install
 
 Then set *environment variables* as necessary. The following variables are available:
 * **WATCH_PIN** (Sets the PIN users need to use to access the stream, default *NOT SET*)
-* **ADMIN_PIN** (Sets the PIN for the admin interface, default *4542*)
+* **ADMIN_PIN** (Sets the PIN for the admin interface, default *0000*)
 
 ## Usage
 
